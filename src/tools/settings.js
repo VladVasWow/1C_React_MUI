@@ -11,7 +11,7 @@ export const dataBase = {
     server: "1csync.mailcn.com.ua",//"VenaCentr.1c.local.net",
     port: "9443",//"8080",
     dataBase: "VenaCentr",
-    user: "website",//"Администратор",
+    user: "website",//"Администратор", !!!!
     password: "ty4hD65G7T",
 }
 
