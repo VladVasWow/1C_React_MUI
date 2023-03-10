@@ -72,15 +72,16 @@ export const fetchProducts = ({params}) => {
 export const fetchProducts1C = ({params, request}) => {
     const searchParams = new URL(request.url).searchParams;
     const page = searchParams.get('page');
+    const searchText = searchParams.get('find');
     let countProducts = 0;
     let products = [];
     console.log(params);
     console.log(page);
-    return fetch(conectionString()+queryProductsByCategoryIDCount(params.categoryID), getHeaders()) // кількість елементів
+    return fetch(conectionString()+queryProductsByCategoryIDCount(params.categoryID, searchText), getHeaders()) // кількість елементів
             .then(response => response.text()) 
             .then(text => {countProducts = text;
                     console.log(countProducts);
-                    return fetch(conectionString()+queryProductsByCategoryID(params.categoryID,page), getHeaders())
+                    return fetch(conectionString()+queryProductsByCategoryID(params.categoryID,page, searchText), getHeaders())
                     }) // товари
             .then(response => response.json())     
             .then(json => { products = json.value;

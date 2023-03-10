@@ -6,13 +6,11 @@ import Paper from '@mui/material/Paper';
 import { OrderTableHead } from "../components/OrderTable/OrderTableHead";
 import { OrderTableRow } from "../components/OrderTable/OrderTableRow";
 import { OrderTableFooter } from "../components/OrderTable/OrderTableFooter";
-import Divider from '@mui/material/Divider';
-
-
-////Ref_Key,Description,Категория_Key,Parent_Key,ОсновноеИзображение,Code,Описание,ЕдиницаХраненияОстатков____Presentation
+import { useSelector } from "react-redux";
 
 export const OrderPage = () => {
-    const [order, setOrder] = useOutletContext();
+    const order = useSelector(state => state.order);
+    console.log(order);
     return (
         <TableContainer component={Paper} sx={{ mt: 2 }}>
             <Table sx={{ minWidth: 500 }} aria-label="order">
@@ -23,8 +21,7 @@ export const OrderPage = () => {
                             key={row.product.Ref_Key}
                             row={row}
                             index={index}
-                            order={order}
-                            setOrder={setOrder}>
+                            order={order}>
                         </OrderTableRow>
                     ))}
                     <OrderTableFooter sum = {order.reduce((accumulator,currentValue) => {return accumulator + currentValue.countProduct*currentValue.price},0)}></OrderTableFooter>

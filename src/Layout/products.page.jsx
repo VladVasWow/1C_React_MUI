@@ -6,6 +6,7 @@ import { ProductCard } from "../components/ProductCard/ProductCard";
 import { ProductsPagination } from "../components/Tools/ProductsPagination";
 import { useOutletContext } from "react-router-dom";
 import { SnackAppBar } from "../components/Tools/SnackAppBar";
+import { useSelector } from "react-redux";
 
 export const ProductsPage = () => {
 
@@ -16,16 +17,22 @@ export const ProductsPage = () => {
     const { categoryID } = params;
     const [searchParams] = useSearchParams();
     const page = searchParams.get('page') || '';
-    const [order, setOrder] = useOutletContext();
-    console.log(prices);
+    const find = searchParams.get('find') || '';
+    const order = useSelector(state => state.order);
+    //console.log(prices);
     //console.log(searchParams.toString());
     //console.log(useParams());
     //console.log(setOrder);
+    console.log(find);
 
     return (
         <Container sx = {{ width: '100%'}}>
             <Container sx = {{ width: '100%', display: "flex", justifyContent: "center"}} >
-                <ProductsPagination params={{categoryID, page, count}} />
+                <ProductsPagination 
+                        categoryID = {categoryID} 
+                        page = {page}
+                        count = {count}
+                        find = {find}/>            
             </Container>
             <Grid container maxWidth="xl" spacing={2} mt={0}>
                 {state === "loading" ? "LOADING..." :
@@ -35,16 +42,17 @@ export const ProductsPage = () => {
                                     product={product} 
                                     price = {prices.find((price)=> price.ЕдиницаИзмерения_Key === product.ЕдиницаХраненияОстатков_Key)} 
                                     order = {order} 
-                                    setOrder={setOrder} 
-                                    //isSnackOpen = {isSnackOpen} 
-                                    //setSnackOpen= {setSnackOpen} 
                                     />
                         </Grid>
                         )
                     })}
             </Grid>
             <Container sx = {{ width: '100%', mt: 1, display: "flex", justifyContent: "center"}} >
-                <ProductsPagination params={{categoryID, page, count}}/>
+                <ProductsPagination 
+                    categoryID = {categoryID} 
+                    page = {page}
+                    count = {count}
+                    find = {find}/>
             </Container>
         </Container>)
 }

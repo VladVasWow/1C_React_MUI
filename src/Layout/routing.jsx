@@ -1,6 +1,6 @@
 import {createBrowserRouter} from 'react-router-dom'
 import { Layout } from "./layout";
-import { IndexPage } from "./indes.page";
+import { IndexPage } from "./index.page";
 import { ProductsPage } from "./products.page";
 import { AboutPage } from "./about.page";
 import { ErrorPage } from './error.page';
@@ -26,6 +26,11 @@ export const routing = createBrowserRouter([
         },
         {
           path: "products/:categoryID/*",
+          element: <ProductsPage />,
+          loader: fetchProducts1C, // fetchProducts1C
+        },
+        {
+          path: "products/*",
           element: <ProductsPage />,
           loader: fetchProducts1C, // fetchProducts1C
         },

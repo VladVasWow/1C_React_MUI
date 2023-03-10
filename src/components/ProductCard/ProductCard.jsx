@@ -6,20 +6,24 @@ import { NavLink} from "react-router-dom";
 import { CountEditor } from "../Tools/CountEditor";
 import { ccyFormat } from "../../tools/format";
 import { CURRENCY_SIGN } from "../../tools/settings";
+import { useDispatch } from "react-redux";
+import { addProductToOrder } from "../Slices/orderSlice";
+import { showMessage } from "../Slices/snackMessageSlice";
 
 
 export const ProductCard = (props) => {
         
     const [countProduct, setCountProduct] = useState(1);
     const {product, price, order, setOrder, isSnackOpen, setSnackOpen} = props;
-
+    const dispatch = useDispatch();
     //console.log(setOrder);
 
     const addToBag = () => {
-
-        const newOrder = order.filter((element) => element.product.Ref_Key !== product.Ref_Key);
-        newOrder.push({product, countProduct: countProduct, price: price.Цена});
-        setOrder(newOrder);
+        dispatch(addProductToOrder({product, countProduct: countProduct, price: price.Цена}))
+        dispatch(showMessage({type : "info", textMessage: `Товар ${product.Description} у кількості ${countProduct}${product.ЕдиницаХраненияОстатков____Presentation} додано у кошик.`}));
+        // const newOrder = order.filter((element) => element.product.Ref_Key !== product.Ref_Key);
+        // newOrder.push({product, countProduct: countProduct, price: price.Цена});
+        // setOrder(newOrder);
         //setSnackOpen(true);
     }
 

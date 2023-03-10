@@ -8,12 +8,10 @@ import { SnackAppBar } from "../components/Tools/SnackAppBar";
 export const Layout = () => {
     const [order, setOrder] = useState([]);
     
-
     return (
     <>
         <header>
-            <Header orderLength={order.length}/>
-
+            <Header/>
         </header>
         <main>
             <Container 

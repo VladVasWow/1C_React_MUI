@@ -23,13 +23,14 @@ export const queryCatigoryesByRoot = (rootID = EMPTY_LINK_ID) => {
 //     "&$format=json&$expand=ОсновноеИзображение")
 // }
 
-export const queryProductsByCategoryID = (categoryID = EMPTY_LINK_ID, page = 1) => {
+export const queryProductsByCategoryID = (categoryID, page = 1, searchText="") => {
     return ("Catalog_Номенклатура?"+
     "$filter="+
-        "(ИспользуетВебСайт) and"+
-        "(not DeletionMark) and "+
-//        " ((Категория_Key eq guid'"+ categoryID +"') or (Категория/Parent_Key eq guid'"+ categoryID +"'))"+
-        " ((Категория_Key eq guid'"+ categoryID +"') or (Категория/Parent_Key eq guid'"+ categoryID +"') or (Категория/Parent/Parent_Key eq guid'"+ categoryID +"'))"+
+        "(ИспользуетВебСайт) and " +
+        "(not DeletionMark) and " +
+        ((categoryID) ? " ((Категория_Key eq guid'"+ categoryID +"') or (Категория/Parent_Key eq guid'"+ categoryID +"') or (Категория/Parent/Parent_Key eq guid'"+ categoryID +"'))" : "") +
+        ((searchText) ? "(like(Description,  '%" + searchText +"%'))" :"") +
+//        ((searchText) ? "(substringof('"+ searchText +"', Description))" :"") +
         "&$skip=" + (page - 1) * PRODUCTS_ON_PAGE +"&$top=" +  PRODUCTS_ON_PAGE + 
     "&$format=json"+
     "&$orderby=Description"+
@@ -37,16 +38,17 @@ export const queryProductsByCategoryID = (categoryID = EMPTY_LINK_ID, page = 1) 
     "ОсновноеИзображение/Формат,ОсновноеИзображение/Ref_Key,ОсновноеИзображение/Хранилище_Base64Data"+
     "&$expand=ОсновноеИзображение, Parent")
 }
-
-export const queryProductsByCategoryIDCount = (categoryID = EMPTY_LINK_ID) => {
+// substringof(Str1, Str2)
+export const queryProductsByCategoryIDCount = (categoryID, searchText= "") => {
     return ("Catalog_Номенклатура/$count?"+
     "$filter="+
-        "(ИспользуетВебСайт) and"+
+        "(ИспользуетВебСайт) and "+
         "(not DeletionMark) and "+
-//        " ((Категория_Key eq guid'"+ categoryID +"') or (Категория/Parent_Key eq guid'"+ categoryID +"'))"+
-    " ((Категория_Key eq guid'"+ categoryID +"') or (Категория/Parent_Key eq guid'"+ categoryID +"') or (Категория/Parent/Parent_Key eq guid'"+ categoryID +"'))"+
-    "&$select=Ref_Key"+
-    "&$orderby=Description"+
+       ((categoryID) ? " ((Категория_Key eq guid'"+ categoryID +"') or (Категория/Parent_Key eq guid'"+ categoryID +"') or (Категория/Parent/Parent_Key eq guid'"+ categoryID +"'))" : "" )+
+       ((searchText) ? "(like(Description,  '%" + searchText +"%'))" :"") +
+//        ((searchText) ? "(substringof('"+ searchText +"', Description))" :"") +
+//    "&$select=Ref_Key"+
+//    "&$orderby=Description"+
     "&$format=json")
 }    
 

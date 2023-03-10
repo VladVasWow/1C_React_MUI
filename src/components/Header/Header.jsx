@@ -3,9 +3,12 @@ import HomeIcon from '@mui/icons-material/Home';
 import { AppBar, Toolbar, Typography, IconButton, Badge } from "@mui/material"
 import { SearchAppBar } from "../Tools/SearchAppBar"
 import { NavLink} from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export const Header = (props) => {
-    const {orderLength} = props;
+
+export const Header = () => {
+    const order = useSelector(state => state.order);
+    const orderLength = order.length;
     console.log(orderLength);
     return (
         <AppBar position="static">

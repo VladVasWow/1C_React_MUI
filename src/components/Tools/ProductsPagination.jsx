@@ -3,7 +3,7 @@ import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 
 export  const ProductsPagination = (props) => {
-    const {categoryID, page, count } = props.params;//useLocation();
+    const {categoryID, page, count, find } = props;//useLocation();
     // console.log("----")
     // console.log(useLocation());
     // console.log(props);
@@ -15,7 +15,7 @@ export  const ProductsPagination = (props) => {
         renderItem={(item) => (
           <PaginationItem
             component={Link}
-            to={`/products/${categoryID}?page=${item.page}`}
+            to={`/products${(categoryID) ? "/"+categoryID : ""}?page=${item.page}${(find) ?"&find="+find :""}`}
             {...item}
           />
         )}

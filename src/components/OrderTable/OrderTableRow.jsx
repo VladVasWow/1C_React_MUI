@@ -5,26 +5,25 @@ import { useState, useEffect } from 'react';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { IconButton } from "@mui/material"
 import { ccyFormat } from '../../tools/format';
+import { useDispatch } from "react-redux";
+import { deleteProductFromOrder, changeCountProduct } from "../Slices/orderSlice";
+import { showMessage } from '../Slices/snackMessageSlice';
 
 export const OrderTableRow = (props) => {
-    const {row, index, order, setOrder} = props;
+    const {row, index, order} = props;
     const [countProduct, setCountProduct] = useState(row.countProduct);
+    const dispatch = useDispatch(); 
 
     useEffect(() => {
         if (order[index].countProduct !== countProduct) {
-            setOrder(order.map((productRow, indexRow) => 
-             indexRow === index ? {...productRow, countProduct} : productRow 
-         ))
-         console.log(order);
+            dispatch(changeCountProduct({index, countProduct}))
         }
           
     },[countProduct]) 
 
     const onClickDeleteIcon = () => {
-        setOrder(order.filter((productRow) => 
-            productRow !== row
-         ))
-//        console.log("del");
+        dispatch(deleteProductFromOrder(index));
+        dispatch(showMessage({type : "warning", textMessage: `Товар ${row.product.Description} видалено з кошику.`}));
     }
 
     return (
