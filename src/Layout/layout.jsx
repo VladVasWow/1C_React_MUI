@@ -1,12 +1,9 @@
 import { Container } from "@mui/system";
-import { useState, useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { Catigories } from "../components/Catigories/Catigories";
 import { Header } from "../components/Header/Header";
-import { SnackAppBar } from "../components/Tools/SnackAppBar";
 
 export const Layout = () => {
-    const [order, setOrder] = useState([]);
     
     return (
     <>
@@ -18,7 +15,7 @@ export const Layout = () => {
                 sx={{display: "flex", justifyContent: "space-between"}}>
                 <Catigories ></Catigories>
                 <Container sx={{ mt: 2 }}>
-                    <Outlet context={[order, setOrder]}></Outlet>
+                    <Outlet></Outlet>
                 </Container>
             </Container>    
         </main>    

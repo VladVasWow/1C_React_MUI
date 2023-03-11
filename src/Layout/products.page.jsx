@@ -1,28 +1,26 @@
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import { useLoaderData, useNavigation, useSearchParams } from "react-router-dom"
 import {  useParams } from "react-router-dom";
 import { ProductCard } from "../components/ProductCard/ProductCard";
 import { ProductsPagination } from "../components/Tools/ProductsPagination";
-import { useOutletContext } from "react-router-dom";
-import { SnackAppBar } from "../components/Tools/SnackAppBar";
 import { useSelector } from "react-redux";
+import { ProductCardSkeleton } from "../components/ProductCard/ProductCardSkeleton";
 
 export const ProductsPage = () => {
 
     const loaderData = useLoaderData();
-    const {products, count, prices} = loaderData;
+    const {products, prices} = loaderData;
     const { state } = useNavigation();
     const params = useParams();
     const { categoryID } = params;
     const [searchParams] = useSearchParams();
-    const page = searchParams.get('page') || '';
+    const page = searchParams.get('page') || '1';
     const find = searchParams.get('find') || '';
     const order = useSelector(state => state.order);
+    const [count, setCount] = useState(0);
     //console.log(prices);
-    //console.log(searchParams.toString());
-    //console.log(useParams());
-    //console.log(setOrder);
+
     console.log(find);
 
     return (
@@ -32,10 +30,15 @@ export const ProductsPage = () => {
                         categoryID = {categoryID} 
                         page = {page}
                         count = {count}
+                        setCount = {setCount}
                         find = {find}/>            
             </Container>
+            <Container>
+                {(find) ? <Typography  > Результати пошуку по "{find}."</Typography> : null}
+                {(state !== "loading" && !count) ? <Typography>По запиту не знайдено жодного товару.</Typography> : null}
+            </Container>
             <Grid container maxWidth="xl" spacing={2} mt={0}>
-                {state === "loading" ? "LOADING..." :
+                {state === "loading" ?  Array.from(new Array(5)).map((item, index) => (<ProductCardSkeleton></ProductCardSkeleton>)) :
                     products.map((product) => {
                         return (<Grid item key={product.Ref_Key} xs={12} sm={6} md={4} xl={3}>
                                 <ProductCard 

@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card, CardActions, CardContent, CardMedia, Typography, TextField, InputAdornment,IconButton, Link,CardActionArea } from "@mui/material";
 import { ShoppingBagRounded } from "@mui/icons-material"
-import { Container } from "@mui/system";
 import { NavLink} from "react-router-dom";
 import { CountEditor } from "../Tools/CountEditor";
 import { ccyFormat } from "../../tools/format";
@@ -14,17 +13,13 @@ import { showMessage } from "../Slices/snackMessageSlice";
 export const ProductCard = (props) => {
         
     const [countProduct, setCountProduct] = useState(1);
-    const {product, price, order, setOrder, isSnackOpen, setSnackOpen} = props;
+    const {product, price} = props;
     const dispatch = useDispatch();
     //console.log(setOrder);
 
     const addToBag = () => {
         dispatch(addProductToOrder({product, countProduct: countProduct, price: price.Цена}))
         dispatch(showMessage({type : "info", textMessage: `Товар ${product.Description} у кількості ${countProduct}${product.ЕдиницаХраненияОстатков____Presentation} додано у кошик.`}));
-        // const newOrder = order.filter((element) => element.product.Ref_Key !== product.Ref_Key);
-        // newOrder.push({product, countProduct: countProduct, price: price.Цена});
-        // setOrder(newOrder);
-        //setSnackOpen(true);
     }
 
     return (

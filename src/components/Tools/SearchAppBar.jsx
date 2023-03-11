@@ -61,12 +61,10 @@ export const SearchAppBar = () => {
 
     const onBlurSearch = (event) => {
         
-        if (event.target.value.length < 4) {
+        if (event.target.value.length < 3) {
             dispatch(showMessage({type : "warning", textMessage: `Давжина пошуку повинна бути довше 3 символів`}));
             return
         }
-
-        console.log(event.target.value);
         navigate(`/products?find=${event.target.value}&page=1`)
         setSearchText("");
     }

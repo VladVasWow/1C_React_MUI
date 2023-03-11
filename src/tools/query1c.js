@@ -29,7 +29,7 @@ export const queryProductsByCategoryID = (categoryID, page = 1, searchText="") =
         "(ИспользуетВебСайт) and " +
         "(not DeletionMark) and " +
         ((categoryID) ? " ((Категория_Key eq guid'"+ categoryID +"') or (Категория/Parent_Key eq guid'"+ categoryID +"') or (Категория/Parent/Parent_Key eq guid'"+ categoryID +"'))" : "") +
-        ((searchText) ? "(like(Description,  '%" + searchText +"%'))" :"") +
+        ((searchText) ? "(like(НаименованиеПолное,  '%" + searchText +"%'))" :"") +
 //        ((searchText) ? "(substringof('"+ searchText +"', Description))" :"") +
         "&$skip=" + (page - 1) * PRODUCTS_ON_PAGE +"&$top=" +  PRODUCTS_ON_PAGE + 
     "&$format=json"+
@@ -45,7 +45,7 @@ export const queryProductsByCategoryIDCount = (categoryID, searchText= "") => {
         "(ИспользуетВебСайт) and "+
         "(not DeletionMark) and "+
        ((categoryID) ? " ((Категория_Key eq guid'"+ categoryID +"') or (Категория/Parent_Key eq guid'"+ categoryID +"') or (Категория/Parent/Parent_Key eq guid'"+ categoryID +"'))" : "" )+
-       ((searchText) ? "(like(Description,  '%" + searchText +"%'))" :"") +
+       ((searchText) ? "(like(НаименованиеПолное,  '%" + searchText +"%'))" :"") +
 //        ((searchText) ? "(substringof('"+ searchText +"', Description))" :"") +
 //    "&$select=Ref_Key"+
 //    "&$orderby=Description"+
