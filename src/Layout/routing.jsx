@@ -5,8 +5,8 @@ import { ProductsPage } from "./products.page";
 import { AboutPage } from "./about.page";
 import { ErrorPage } from './error.page';
 import { ProductPage } from './product.page';
-import { fetchProduct1CByID, fetchProductByID, fetchProducts, fetchProducts1C } from '../tools/fetch-product';
-import { fetchCategoryByPerentID, fetchCatigories, fetchCatigories1CRootID} from '../tools/fetch-catigories';
+import { fetchProduct1CByID, fetchProducts1C } from '../tools/fetch-product';
+import { fetchCatigories1CRootID} from '../tools/fetch-catigories';
 import { СatigoriesРage } from './catigories.page';
 import { OrderPage } from './order.page';
 

@@ -12,20 +12,41 @@ export const dataBase = {
     port: "9443",//"8080",
     dataBase: "VenaCentr",
     user: "website",//"Администратор", !!!!
-    password: "ty4hD65G7T",
+    password: "ty4hD65G7T"
 }
 
-// const baseVenaCentr = {
-//     protocol: "http",
-//     server: "192.168.124.10",//"VenaCentr.1c.local.net",
-//     port: "80",//"8080",
-//     dataBase: "VenaCentr_Vlad",
-//     user: "Администратор",
-//     password: "",
-// }
+ const testDataBase = {
+    protocol: "http",
+    server: "192.168.124.10",//"VenaCentr.1c.local.net",
+    port: "80",//"8080",
+    dataBase: "VenaCentr_Vlad",
+    user: "Администратор",
+    password: "524288"
+}
+export const test_conectionString = () => {
+    return `${testDataBase.protocol}://${testDataBase.server}:${testDataBase.port}/${testDataBase.dataBase}/odata/standard.odata/`;
+}
 
 export const conectionString = () => {
     return `${dataBase.protocol}://${dataBase.server}:${dataBase.port}/${dataBase.dataBase}/odata/standard.odata/`;
+}
+
+export const postHeaders = () => {
+
+    const credentials = btoa(unescape(encodeURIComponent(testDataBase.user+":"+testDataBase.password)));
+    //console.log(credentials);
+    //console.log(conectionString(baseVenaCentr)+"Catalog_Номенклатура?$top=10&$format=json");
+    //var auth = { "Authorization" : `Basic ${credentials}`, 'Content-Type': 'application/xml' };
+
+   return  {headers :({"Authorization" : `Basic ${credentials}`,
+                                'Content-Type': 'application/json'
+                                //  "Access-Control-Allow-Origin" : "*",
+                                //  "Access-Control-Allow-Credentials": "true",
+                                //  "Access-Control-Max-Age": "1800",
+                                //  "Access-Control-Allow-Headers": "content-type",
+                                //  "Access-Control-Allow-Methods":"PUT, POST, GET, DELETE, PATCH, OPTIONS"
+                            })};
+
 }
 
 export const getHeaders = () => {

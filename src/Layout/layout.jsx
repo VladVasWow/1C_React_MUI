@@ -1,6 +1,6 @@
 import { Container } from "@mui/system";
 import { NavLink, Outlet } from "react-router-dom";
-import { Catigories } from "../components/Catigories/Catigories";
+import { Catigories } from "../components/Categories/Categories";
 import { Header } from "../components/Header/Header";
 
 export const Layout = () => {

@@ -1,7 +1,7 @@
 import { Container, Grid, Typography } from "@mui/material";
 import { useState } from "react";
 import { useLoaderData, useNavigation, useSearchParams } from "react-router-dom"
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ProductCard } from "../components/ProductCard/ProductCard";
 import { ProductsPagination } from "../components/Tools/ProductsPagination";
 import { useSelector } from "react-redux";
@@ -15,13 +15,12 @@ export const ProductsPage = () => {
     const params = useParams();
     const { categoryID } = params;
     const [searchParams] = useSearchParams();
-    const page = searchParams.get('page') || '1';
+    const page = searchParams.get('page') || '';
     const find = searchParams.get('find') || '';
     const order = useSelector(state => state.order);
     const [count, setCount] = useState(0);
     //console.log(prices);
-
-    console.log(find);
+    //console.log(find);
 
     return (
         <Container sx = {{ width: '100%'}}>
@@ -38,7 +37,10 @@ export const ProductsPage = () => {
                 {(state !== "loading" && !count) ? <Typography>По запиту не знайдено жодного товару.</Typography> : null}
             </Container>
             <Grid container maxWidth="xl" spacing={2} mt={0}>
-                {state === "loading" ?  Array.from(new Array(5)).map((item, index) => (<ProductCardSkeleton></ProductCardSkeleton>)) :
+                {state === "loading" ?  Array.from(new Array(5)).map((item, index) => (
+                        <ProductCardSkeleton 
+                            item key={index}>
+                        </ProductCardSkeleton>)) :
                     products.map((product) => {
                         return (<Grid item key={product.Ref_Key} xs={12} sm={6} md={4} xl={3}>
                                 <ProductCard 

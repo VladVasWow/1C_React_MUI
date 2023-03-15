@@ -109,11 +109,5 @@ export const fetchProduct1CByID = ({params}) => {
             });
 }
 
-export const getProductImageURL =(storage1c) => {
-    //return ( `${baseVenaCentr.protocol}://${baseVenaCentr.server}:${baseVenaCentr.port}/${baseVenaCentr.dataBase}/hs/WebSite/GetPictureByID/` + Ref_Key);
-    //return "http://mob1csync.mailcn.com.ua:9690/web-storage/pict/b977d158-e89c-4a9b-a6ec-d009306c81f9.jpg";
-    return `${IMAGE_SERVER}${storage1c.Ref_Key}.${storage1c.Формат}`; // зображення з файл-серверу
-
-}
 
 

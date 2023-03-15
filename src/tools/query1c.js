@@ -2,8 +2,9 @@ import { EMPTY_LINK_ID, PRODUCTS_ON_PAGE, RETAIL_PRICE_TYPE_ID } from "./setting
 
 export const queryCatigoryes = (parentID = EMPTY_LINK_ID) => { 
     return ("Catalog_КатегорииТоваров?&$filter=Parent_Key eq guid'"+parentID+"' and not DeletionMark"+
-    "&$format=json&$expand=ОсновноеИзображение"+
-    "&$select=Ref_Key,Description,ОсновноеИзображение/Формат,ОсновноеИзображение/Ref_Key,ОсновноеИзображение/Хранилище_Base64Data"+
+    "&$format=json"+
+    "&$expand=ОсновноеИзображение"+
+    "&$select=Ref_Key,Description,ОсновноеИзображение/Ref_Key"+
     "&$orderby=Description")
 }    
 
@@ -34,8 +35,8 @@ export const queryProductsByCategoryID = (categoryID, page = 1, searchText="") =
         "&$skip=" + (page - 1) * PRODUCTS_ON_PAGE +"&$top=" +  PRODUCTS_ON_PAGE + 
     "&$format=json"+
     "&$orderby=Description"+
-    "&$select=Ref_Key,Description,Категория_Key,Parent_Key,Parent,Code,Описание,ЕдиницаХраненияОстатков_Key,ЕдиницаХраненияОстатков____Presentation,"+
-    "ОсновноеИзображение/Формат,ОсновноеИзображение/Ref_Key,ОсновноеИзображение/Хранилище_Base64Data"+
+    "&$select=Ref_Key,Description,Категория_Key,Parent_Key,СтавкаНДС,Parent,Code,Описание,ЕдиницаХраненияОстатков_Key,ЕдиницаХраненияОстатков____Presentation,"+
+    "ОсновноеИзображение/Формат,ОсновноеИзображение/Ref_Key"+
     "&$expand=ОсновноеИзображение, Parent")
 }
 // substringof(Str1, Str2)
@@ -60,4 +61,16 @@ export const queryPricesByUnits = (units, priceType = RETAIL_PRICE_TYPE_ID) => {
             }).join("") +
             ")&$format=json"
         )
+}
+
+export const queryStorage = (objectID) => {
+    return ("Catalog_ХранилищеДополнительнойИнформации(guid'" + objectID +"')?"+
+            "$format=json&$select=Хранилище_Base64Data"
+    )
+}
+
+export const queryOrderPost = () => {
+    return ("Document_туКоммерческоеПредложение?"+
+            "$format=json"
+    )
 }

@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { Card, CardActions, CardContent, CardMedia, Typography, TextField, InputAdornment,IconButton, Link,CardActionArea } from "@mui/material";
-import { ShoppingBagRounded } from "@mui/icons-material"
+import { useState, useEffect } from "react";
+import { Card, CardActions, CardContent, CardMedia, Typography, IconButton, CardActionArea } from "@mui/material";
 import { NavLink} from "react-router-dom";
 import { CountEditor } from "../Tools/CountEditor";
 import { ccyFormat } from "../../tools/format";
@@ -8,14 +7,25 @@ import { CURRENCY_SIGN } from "../../tools/settings";
 import { useDispatch } from "react-redux";
 import { addProductToOrder } from "../Slices/orderSlice";
 import { showMessage } from "../Slices/snackMessageSlice";
+import { fetchDataFromStorage1C } from "../../tools/fetch-other";
+
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import { ShoppingBagRounded } from "@mui/icons-material"
 
 
 export const ProductCard = (props) => {
         
     const [countProduct, setCountProduct] = useState(1);
+    const [imageData, setImageData] = useState(null);
     const {product, price} = props;
     const dispatch = useDispatch();
     //console.log(setOrder);
+
+    useEffect(() => {
+        if (product.ОсновноеИзображение) {
+        fetchDataFromStorage1C(product.ОсновноеИзображение.Ref_Key)
+            .then(setImageData);
+    }}, [])
 
     const addToBag = () => {
         dispatch(addProductToOrder({product, countProduct: countProduct, price: price.Цена}))
@@ -28,7 +38,7 @@ export const ProductCard = (props) => {
                     <CardMedia 
                         component="img"
                         //image = {getProductImageURL(product.Ref_Key)}
-                        src = {product.ОсновноеИзображение? "data:image/jpeg;base64," + product.ОсновноеИзображение.Хранилище_Base64Data :"/noimages.png"}
+                        src = {product.ОсновноеИзображение? "data:image/jpeg;base64," + imageData :"/noimages.png"}
                         alt = {product.Code}
                         sx = {{height: 140, objectFit: "contain"}}>
                     </CardMedia>
@@ -55,7 +65,7 @@ export const ProductCard = (props) => {
                     </CountEditor>
                     <IconButton color="primary"
                         onClick={addToBag}>
-                        <ShoppingBagRounded />
+                        <AddShoppingCartIcon color="inherit"/>
                     </IconButton>      
  
             </CardActions>
