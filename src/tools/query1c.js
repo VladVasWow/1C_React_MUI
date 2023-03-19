@@ -76,6 +76,14 @@ export const queryOrderPost = () => {
 }
 
 export const queryGetOrders = () => {
-    return (`Document_туКоммерческоеПредложение?$filter= Контрагент_Key eq guid'${CLIENT_ID}'&$format=json&$orderby=Date`);
-    
+    return (`Document_туКоммерческоеПредложение?$filter= Контрагент_Key eq guid'${CLIENT_ID}'` +
+    `&$select=Ref_Key, Number, Date, СуммаДокумента, DeletionMark, Posted` +
+    `&$format=json&$orderby=Date`);
 }    
+
+export const queryGetOrderProducts = (orderID) => {
+    return (`Document_туКоммерческоеПредложение_Товары?$filter= Ref_Key eq guid'${orderID}'` +
+    `&$select=LineNumber, Код, Номенклатура/Description, ЕдиницаИзмерения/Description, Количество, ЦенаСНДС, Сумма, СуммаНДС` +
+    `&$expand=Номенклатура, ЕдиницаИзмерения` +
+    `&$format=json&$orderby=LineNumber`);
+}  

@@ -1,4 +1,4 @@
-import { queryGetOrders, queryOrderPost } from "./query1c";
+import { queryGetOrderProducts, queryGetOrders, queryOrderPost } from "./query1c";
 import { test_conectionString, RETAIL_PRICE_TYPE_ID, postHeaders, CLIENT_ID, CURRENCY_ID, CONTRACT_ID, conectionString, getHeaders } from "./settings";
 import templateOrder from "../template/order.json"
 import templateProduct from "../template/product.json"
@@ -49,6 +49,16 @@ export const fetchOrderPOST = (order) => {
 export const fetchOrders = () => {
    
     return   fetch(conectionString()+queryGetOrders(), getHeaders())
+            .then(response => response.json()) 
+            .then(json => json.value) 
+            .catch(error =>{
+                console.log(error);
+            });
+}
+
+export const fetchOrderProducts = (orderID) => {
+   
+    return   fetch(conectionString()+queryGetOrderProducts(orderID), getHeaders())
             .then(response => response.json()) 
             .then(json => json.value) 
             .catch(error =>{
