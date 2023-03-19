@@ -18,7 +18,7 @@ export const Catigories = () => {
 
     return (
         <Box sx={{ maxWidth: { md:250, sm: 160 }, display: {sm: "block",xs: "none"}}} width='100%'>
-            <List > {(catigories) ? catigories.map((catigoryInfo) => {
+            <List component="nav"> {(catigories) ? catigories.map((catigoryInfo) => {
                 return (
                     <Catigory key={catigoryInfo.Ref_Key} catigoryInfo={catigoryInfo} ></Catigory>
                 )

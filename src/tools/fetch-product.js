@@ -56,26 +56,13 @@ export const fetchProducts = ({params}) => {
     })
 };
 
-// export const fetchProducts1C = ({params, request}) => {
-//     const searchParams = new URL(request.url).searchParams;
-//     const page = searchParams.get('page');
-//     console.log(params);
-//     console.log(page);
-//     return fetch(conectionString()+queryProductsByCategoryID(params.categoryID, page), getHeaders())
-//             .then(response => response.json())      
-//             .then(json => json.value)
-//             .catch(error =>{
-//                 console.log(error);
-//             });
-// }
-
 export const fetchProducts1C = ({params, request}) => {
     const searchParams = new URL(request.url).searchParams;
     const page = searchParams.get('page');
     const searchText = searchParams.get('find');
     let products = [];
-    console.log(params);
-    console.log(page);
+    //console.log(params);
+    //console.log(page);
     return  fetch(conectionString()+queryProductsByCategoryID(params.categoryID,page, searchText), getHeaders()) // товари
             .then(response => response.json())     
             .then(json => { products = json.value;
@@ -89,8 +76,8 @@ export const fetchProducts1C = ({params, request}) => {
 }
 
 export const fetchCountProducts1C = (categoryID, searchText) => {
-    console.log(searchText);
-    console.log(categoryID);
+    //console.log(searchText);
+    //console.log(categoryID);
     return fetch(conectionString()+queryProductsByCategoryIDCount(categoryID, searchText), getHeaders()) // кількість елементів
             .then(response => response.text()) 
             .then(text => Math.ceil(text/PRODUCTS_ON_PAGE)) 

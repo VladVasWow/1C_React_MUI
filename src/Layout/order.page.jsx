@@ -8,9 +8,11 @@ import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import { fetchOrderPOST } from "../tools/fetch-order";
 import { orderSum } from "../tools/calculations";
+import { useParams } from "react-router-dom";
 
 export const OrderPage = () => {
 
+    const {orderID} = useParams();
     const order = useSelector(state => state.order);
 
     const onClickOrderSend = () => {
@@ -23,7 +25,7 @@ export const OrderPage = () => {
             Нове замовлення
         </Typography>
         <TableContainer component={Paper} sx={{ mt: 2 }}>
-            <Table sx={{ minWidth: 500 }} aria-label="order">
+            <Table  aria-label="order">
                 <OrderTableHead></OrderTableHead>
                 <TableBody>
                     {order.map((row, index) => (
@@ -44,7 +46,7 @@ export const OrderPage = () => {
                 sx={{ mt: 2 }} 
                 endIcon={<SendIcon />}
                 onClick={onClickOrderSend}>
-            Відправити замовлення.
+            Створити замовлення
         </Button>
         </Container>
     );

@@ -9,6 +9,7 @@ import { fetchProduct1CByID, fetchProducts1C } from '../tools/fetch-product';
 import { fetchCatigories1CRootID} from '../tools/fetch-catigories';
 import { СatigoriesРage } from './catigories.page';
 import { OrderPage } from './order.page';
+import { AccountPage } from './account.page';
 
 export const routing = createBrowserRouter([
     {
@@ -25,6 +26,9 @@ export const routing = createBrowserRouter([
           element: <OrderPage />,
         },
         {
+          path: "account",
+          element: <AccountPage />,
+        },        {
           path: "products/:categoryID/*",
           element: <ProductsPage />,
           loader: fetchProducts1C, // fetchProducts1C

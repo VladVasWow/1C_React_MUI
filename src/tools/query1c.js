@@ -1,4 +1,4 @@
-import { EMPTY_LINK_ID, PRODUCTS_ON_PAGE, RETAIL_PRICE_TYPE_ID } from "./settings"
+import { CLIENT_ID, EMPTY_LINK_ID, PRODUCTS_ON_PAGE, RETAIL_PRICE_TYPE_ID } from "./settings"
 
 export const queryCatigoryes = (parentID = EMPTY_LINK_ID) => { 
     return ("Catalog_КатегорииТоваров?&$filter=Parent_Key eq guid'"+parentID+"' and not DeletionMark"+
@@ -74,3 +74,8 @@ export const queryOrderPost = () => {
             "$format=json"
     )
 }
+
+export const queryGetOrders = () => {
+    return (`Document_туКоммерческоеПредложение?$filter= Контрагент_Key eq guid'${CLIENT_ID}'&$format=json&$orderby=Date`);
+    
+}    
