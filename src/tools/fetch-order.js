@@ -46,9 +46,9 @@ export const fetchOrderPOST = (order) => {
             });
 }
 
-export const fetchOrders = () => {
+export const fetchOrders = (ordersRange) => {
    
-    return   fetch(conectionString()+queryGetOrders(), getHeaders())
+    return   fetch(conectionString()+queryGetOrders(ordersRange), getHeaders())
             .then(response => response.json()) 
             .then(json => json.value) 
             .catch(error =>{

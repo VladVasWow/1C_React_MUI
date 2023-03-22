@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { Container, Typography } from '@mui/material';
 import {List, Collapse} from '@mui/material';
-import ListItem from '@mui/material/ListItem';
+import {ListItem} from '@mui/material';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -13,20 +13,17 @@ import BlockIcon from '@mui/icons-material/Block';
 import Paper from '@mui/material/Paper';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import { DateRangePicker } from "../components/Tools/DateRangePicker";
 
 export const AccountPage = () => {
+    const [ordersRange, setOrdersRange] = useState({start:new Date().setHours(0, 0, 0, 0), end: new Date()})
     const [orders, setOrders] = useState([]);
     const [productsByOrder, setProductsByOrder] = useState({})
     useEffect(() => {
-        fetchOrders()
+        console.log(ordersRange);
+        fetchOrders(ordersRange)
             .then(setOrders)
-    }, [])
-
-    // useEffect(() => {
-    //     if ()
-    //     fetchOrders()
-    //         .then(setOrders)
-    // }, [orders])
+    }, [ordersRange])
 
     const handleClick = (n) => {
         if (!orders[n].open && !productsByOrder[orders[n]]) {
@@ -40,14 +37,15 @@ export const AccountPage = () => {
 
     return (
         <Container component={Paper} sx={{ width: '100%'}}>
-            <Typography variant="h6">
-                Перелік замовлень:
-            </Typography>
+            <DateRangePicker head ={"Замовлення"}
+                ordersRange= {ordersRange} 
+                setOrdersRange={setOrdersRange}>
+            </DateRangePicker>
             <List  component="nav" > {orders.map((order, index) => { 
                 return (
                 <Container key = {order.Ref_Key}>    
                     <ListItem disablePadding  component="div">
-                        <ListItemButton sx={{p:0}} onClick ={()=> handleClick(index)}>
+                        <ListItemButton sx={{p:0.5}} onClick ={()=> handleClick(index)}>
                             <ListItemIcon>
                                 {(order.DeletionMark) ? <BlockIcon color="error"/> : <AssignmentIcon color={(order.Posted ? "primary":"disabled" )} /> }
                             </ListItemIcon>
