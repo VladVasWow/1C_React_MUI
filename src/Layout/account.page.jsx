@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react"
-import { Container, Typography } from '@mui/material';
-import {List, Collapse} from '@mui/material';
-import {ListItem} from '@mui/material';
+import {List, Collapse, ListItem, Container} from '@mui/material';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -14,9 +12,10 @@ import Paper from '@mui/material/Paper';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { DateRangePicker } from "../components/Tools/DateRangePicker";
+import dayjs from 'dayjs';
 
 export const AccountPage = () => {
-    const [ordersRange, setOrdersRange] = useState({start:new Date().setHours(0, 0, 0, 0), end: new Date()})
+    const [ordersRange, setOrdersRange] = useState({start:dayjs().startOf("day").subtract(6,"M"), end: dayjs().endOf("day")})
     const [orders, setOrders] = useState([]);
     const [productsByOrder, setProductsByOrder] = useState({})
     useEffect(() => {

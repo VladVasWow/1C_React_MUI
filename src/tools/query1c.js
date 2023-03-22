@@ -1,3 +1,4 @@
+import { odata1cDateFormat } from "./format"
 import { CLIENT_ID, EMPTY_LINK_ID, PRODUCTS_ON_PAGE, RETAIL_PRICE_TYPE_ID } from "./settings"
 
 export const queryCatigoryes = (parentID = EMPTY_LINK_ID) => { 
@@ -75,8 +76,9 @@ export const queryOrderPost = () => {
     )
 }
 
-export const queryGetOrders = () => {
-    return (`Document_туКоммерческоеПредложение?$filter= Контрагент_Key eq guid'${CLIENT_ID}'` +
+export const queryGetOrders = ({start, end}) => {
+    return (`Document_туКоммерческоеПредложение?$filter= (Контрагент_Key eq guid'${CLIENT_ID}')` +
+    ` and (Date ge datetime'${odata1cDateFormat(start)}') and (Date le '${odata1cDateFormat(end)}')`+
     `&$select=Ref_Key, Number, Date, СуммаДокумента, DeletionMark, Posted` +
     `&$format=json&$orderby=Date`);
 }    

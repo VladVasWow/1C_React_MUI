@@ -13,7 +13,7 @@ export const DateRangePicker = (props) => {
 
 	return (
 
-		<Container sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+		<Container sx={{display: "flex", flexDirection: {md:"row", xs: "column" }, justifyContent: "center", alignItems: "center"}}>
 			<LocalizationProvider
 				dateAdapter={AdapterDayjs}
 				adapterLocale="uk">
