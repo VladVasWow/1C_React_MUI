@@ -24,7 +24,7 @@ export const DateRangePicker = (props) => {
 					sx = {{maxWidth: 160}}
 					label="Початок періоду"
 					value={dayjs(ordersRange.start)}
-					onChange={(newValue)=>setOrdersRange({...ordersRange, start: newValue})} 
+					onAccept={(newValue)=>setOrdersRange({...ordersRange, start: newValue})} 
 					slotProps={{ textField: { variant: 'outlined' },  size: "Small" ,  py: 0, color: "error" }}/>
 				<Typography variant="h5" sx={{px:1}}>
 					по
@@ -32,7 +32,7 @@ export const DateRangePicker = (props) => {
 				<DatePicker 
 					sx = {{maxWidth: 160}}
 					label="Кінець періоду"
-					onChange={(newValue)=>setOrdersRange({...ordersRange, end: newValue})}
+					onAccept={(newValue)=>setOrdersRange({...ordersRange, end: newValue})}
 					slotProps={{ textField: { size: "Small" } }}
 					value={dayjs(ordersRange.end)} />
 			</LocalizationProvider>

@@ -3,7 +3,7 @@ import { Card, CardActions, CardContent, CardMedia, Typography, IconButton, Card
 import { NavLink} from "react-router-dom";
 import { CountEditor } from "../Tools/CountEditor";
 import { ccyFormat } from "../../tools/format";
-import { CURRENCY_SIGN } from "../../tools/settings";
+import { CURRENCY_SIGN, EMPTY_LINK_ID } from "../../tools/settings";
 import { useDispatch } from "react-redux";
 import { addProductToOrder } from "../Slices/orderSlice";
 import { showMessage } from "../Slices/snackMessageSlice";
@@ -12,18 +12,17 @@ import { fetchDataFromStorage1C } from "../../tools/fetch-other";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { ShoppingBagRounded } from "@mui/icons-material"
 
-
 export const ProductCard = (props) => {
         
     const [countProduct, setCountProduct] = useState(1);
     const [imageData, setImageData] = useState(null);
     const {product, price} = props;
     const dispatch = useDispatch();
-    //console.log(setOrder);
 
     useEffect(() => {
-        if (product.ОсновноеИзображение) {
-        fetchDataFromStorage1C(product.ОсновноеИзображение.Ref_Key)
+        
+        if (product.ОсновноеИзображение_Key !== EMPTY_LINK_ID) {
+            fetchDataFromStorage1C(product.ОсновноеИзображение_Key)
             .then(setImageData);
     }}, [])
 
@@ -33,12 +32,13 @@ export const ProductCard = (props) => {
     }
 
     return (
-        <Card sx={ {maxWidth: 345, height: "100%" }}>
-                <CardActionArea component={NavLink} to={`/product/${product.Ref_Key}`} underline={"hover"} color="primary">
+        <Card sx={ {maxWidth: 345, height: "100%", display: "flex", flexDirection: "column" }}>
+                <CardActionArea component={NavLink} to={`/product/${product.Ref_Key}`} 
+                                underline={"hover"} color="primary" sx={{ flexGrow: 1}}>
                     <CardMedia 
                         component="img"
                         //image = {getProductImageURL(product.Ref_Key)}
-                        src = {product.ОсновноеИзображение? "data:image/jpeg;base64," + imageData :"/noimages.png"}
+                        src = {imageData ? "data:image/jpeg;base64," + imageData :"/noimages.png"}
                         alt = {product.Code}
                         sx = {{height: 140, objectFit: "contain"}}>
                     </CardMedia>
@@ -46,7 +46,7 @@ export const ProductCard = (props) => {
                         <Typography variant="caption">
                             Артикул: {product.Code}
                         </Typography>
-                        <Typography variant="body1">
+                        <Typography variant="body1" >
                             {product.Description}
                         </Typography>
                         <Typography align="right" variant="h6" >

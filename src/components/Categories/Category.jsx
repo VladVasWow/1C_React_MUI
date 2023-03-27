@@ -1,12 +1,10 @@
 import { ListItemText, ListItem, ListItemAvatar, Avatar } from "@mui/material";
+import { useRef } from "react";
 import { useState, useEffect } from "react";
-import { fetchCatigories1CByPerentID } from "../../tools/fetch-catigories";
 import { NavLink } from "react-router-dom";
 import { fetchDataFromStorage1C } from "../../tools/fetch-other";
 
-
-
-export const Catigory = (props) => {
+export const Category = (props) => {
 
     const [imageData, setImageData] = useState(null);
     const {catigoryInfo} = props;
@@ -16,9 +14,11 @@ export const Catigory = (props) => {
         fetchDataFromStorage1C(catigoryInfo.ОсновноеИзображение.Ref_Key)
             .then(setImageData);
     }}, [])
+
+    // dfgdfg
+    
     
     return (
-
                     <ListItem button component={NavLink}
                         to={"catigories/" + catigoryInfo.Ref_Key}
                         key={catigoryInfo.Ref_Key} disablePadding

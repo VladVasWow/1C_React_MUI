@@ -1,4 +1,4 @@
-import { queryPricesByUnits, queryProductsByCategoryID, queryProductsByCategoryIDCount } from "./query1c";
+import { queryPricesByUnits, queryProductsByCategoryID, queryProductsByCategoryIDCount, queryProductByCodeBarcode } from "./query1c";
 import { conectionString, getHeaders, IMAGE_SERVER, PRODUCTS_ON_PAGE } from "./settings";
 
 export const fetchProductByID = ({params}) => {
@@ -81,6 +81,19 @@ export const fetchCountProducts1C = (categoryID, searchText) => {
     return fetch(conectionString()+queryProductsByCategoryIDCount(categoryID, searchText), getHeaders()) // кількість елементів
             .then(response => response.text()) 
             .then(text => Math.ceil(text/PRODUCTS_ON_PAGE)) 
+            .catch(error =>{
+                console.log(error);
+            });
+}
+export const fetchProduct1CByCodeBarcode = (searchText) => {
+    let product;
+    return   fetch(conectionString()+queryProductByCodeBarcode(searchText), getHeaders())
+            .then(response => response.json()) 
+            .then(json => { product = (json.value[0].Владелец) ? json.value[0].Владелец : json.value[0];
+                return fetch(conectionString()+queryPricesByUnits([product]), getHeaders())
+                }) // ціни
+            .then(response => response.json())      
+            .then(json =>{ return {product, price: json.value[0].Цена, countProduct: 1}})
             .catch(error =>{
                 console.log(error);
             });

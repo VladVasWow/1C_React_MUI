@@ -1,4 +1,4 @@
-import {TableCell, TableBody, TableRow, Typography} from '@mui/material';
+import {TableCell, TableBody, TableRow, Typography, Box} from '@mui/material';
 import { CountEditor } from '../Tools/CountEditor';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { IconButton } from "@mui/material"
@@ -6,6 +6,7 @@ import { ccyFormat } from '../../tools/format';
 import { useDispatch } from "react-redux";
 import { deleteProductFromOrder, changeCountProduct } from "../Slices/orderSlice";
 import { showMessage } from '../Slices/snackMessageSlice';
+import { Fragment } from 'react';
 
 export const OrderTableBody = (props) => {
     const { order } = props;
@@ -20,8 +21,8 @@ export const OrderTableBody = (props) => {
 
         <TableBody>
             {order.map((row, index) => (
-            <>
-                <TableRow key = {row.product.Ref_Key+"_1"} sx={{ display: {md: "none",sm: "table-row"}}}>
+            <Fragment key = {row.product.Ref_Key}>
+                <TableRow  sx={{ display: {md: "none",sm: "table-row"}}}>
                     <TableCell component="th" scope="row" colSpan={3} sx = {{borderBottom:0, pb:0}}>
                         {row.product.Code + ", " + row.product.Description}
                         <IconButton  sx={{ display: {md: "none"}}}
@@ -31,7 +32,7 @@ export const OrderTableBody = (props) => {
                     </TableCell>
                 </TableRow>
 
-                <TableRow key = {row.product.Ref_Key+"_2"}>
+                <TableRow>
                     <TableCell align="right" sx={{ display: {md: "table-cell",sm: "none", xs: "none"}}} >{index + 1}</TableCell>
                     <TableCell component="th" scope="row" sx={{ display: {md: "table-cell",sm: "none", xs: "none"}}}>
                         {row.product.Code + ", " + row.product.Description}
@@ -51,7 +52,7 @@ export const OrderTableBody = (props) => {
                         </IconButton>
                     </TableCell>
                 </TableRow>
-                </>))}
+                </Fragment>))}
         </TableBody>
     )
 }

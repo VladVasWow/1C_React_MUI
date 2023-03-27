@@ -1,33 +1,24 @@
-import { List, ListItemText, Box, ListItem, ListItemAvatar, Avatar } from "@mui/material";
-import InboxIcon from '@mui/icons-material/Inbox';
+import { List, ListItemText, ListItem } from "@mui/material";
 import { useState, useEffect } from "react";
-import { fetchCatigories, fetchCatigories1CByPerentID } from "../../tools/fetch-catigories";
-import { NavLink } from "react-router-dom";
-import { Catigory } from "./Category";
+import { fetchCatigories1CByPerentID } from "../../tools/fetch-catigories";
+import { Category } from "./Category";
 
+export const Categories = (props) => {
 
-
-export const Catigories = () => {
-
-    const [catigories, setCatigories] = useState([]);
+    const {categories, setCategories} = props;
 
     useEffect(() => {
+        if (categories.length === 0) 
         fetchCatigories1CByPerentID()
-            .then(setCatigories);
-    }, [])
+            .then(setCategories);
+    }, [categories])
 
     return (
-        <Box sx={{ maxWidth: { md:250, sm: 160 }, display: {sm: "block",xs: "none"}}} width='100%'>
-            <List component="nav"> {(catigories) ? catigories.map((catigoryInfo) => {
+            <List > {(categories) ? categories.map((catigoryInfo) => {
                 return (
-                    <Catigory key={catigoryInfo.Ref_Key} catigoryInfo={catigoryInfo} ></Catigory>
+                    <Category key={catigoryInfo.Ref_Key} catigoryInfo={catigoryInfo} ></Category>
                 )
             }): <ListItem key="1"><ListItemText>LOADING...</ListItemText></ListItem>}
             </List>
-        </Box>
     )
 }
-
-//<NavLink to = {"catigories/" + catigoryInfo.Ref_Key}
-//key = {catigoryInfo.Ref_Key}
-//state={{rootID: catigoryInfo.Ref_Key}}>

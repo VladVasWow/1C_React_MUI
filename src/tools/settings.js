@@ -8,6 +8,17 @@ export const CONTRACT_ID = "2527381e-ebb4-11e3-9e34-0030483095e9"
 export const CURRENCY_ID =  "6d0a1a97-cf0e-11d7-8890-00d0b721b194"
 
 export const CURRENCY_SIGN = "₴"
+export const PRODUCT_CODE_LENGTH = 6
+
+export const getBaseProductFields = (owner="") => (`${owner}Ref_Key,
+    ${owner}Description,
+    ${owner}Категория_Key,
+    ${owner}СтавкаНДС,
+    ${owner}Code,
+    ${owner}Описание,
+    ${owner}ЕдиницаХраненияОстатков_Key,
+    ${owner}ЕдиницаХраненияОстатков____Presentation,
+    ${owner}ОсновноеИзображение_Key`)
 
 export const dataBase = {
     protocol: "https",
@@ -37,17 +48,10 @@ export const conectionString = () => {
 export const postHeaders = () => {
 
     const credentials = btoa(unescape(encodeURIComponent(testDataBase.user+":"+testDataBase.password)));
-    //console.log(credentials);
-    //console.log(conectionString(baseVenaCentr)+"Catalog_Номенклатура?$top=10&$format=json");
-    //var auth = { "Authorization" : `Basic ${credentials}`, 'Content-Type': 'application/xml' };
 
-   return  {headers :({"Authorization" : `Basic ${credentials}`,
+    return  {headers :({"Authorization" : `Basic ${credentials}`,
                                 'Content-Type': 'application/json'
-                                //  "Access-Control-Allow-Origin" : "*",
-                                //  "Access-Control-Allow-Credentials": "true",
-                                //  "Access-Control-Max-Age": "1800",
-                                //  "Access-Control-Allow-Headers": "content-type",
-                                //  "Access-Control-Allow-Methods":"PUT, POST, GET, DELETE, PATCH, OPTIONS"
+
                             })};
 
 }
@@ -55,17 +59,8 @@ export const postHeaders = () => {
 export const getHeaders = () => {
 
     const credentials = btoa(unescape(encodeURIComponent(dataBase.user+":"+dataBase.password)));
-    //console.log(credentials);
-    //console.log(conectionString(baseVenaCentr)+"Catalog_Номенклатура?$top=10&$format=json");
-    //var auth = { "Authorization" : `Basic ${credentials}`, 'Content-Type': 'application/xml' };
-
-   return  {headers :({"Authorization" : `Basic ${credentials}`,
+    return  {headers :({"Authorization" : `Basic ${credentials}`,
                                 'Content-Type': 'application/json'
-                                //  "Access-Control-Allow-Origin" : "*",
-                                //  "Access-Control-Allow-Credentials": "true",
-                                //  "Access-Control-Max-Age": "1800",
-                                //  "Access-Control-Allow-Headers": "content-type",
-                                //  "Access-Control-Allow-Methods":"PUT, POST, GET, DELETE, PATCH, OPTIONS"
                             })};
 
 }
