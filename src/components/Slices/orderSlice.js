@@ -18,10 +18,13 @@ export const orderSlice = createSlice({
         },
         changeCountProduct: (draft, action) => {
             draft[action.payload.index].countProduct = action.payload.countProduct;
+        },
+        clearOrder: (draft) => {
+            draft.splice(0, draft.length);
         }
     }
 })
 
-export const { addProductToOrder, deleteProductFromOrder, changeCountProduct } = orderSlice.actions;
+export const { addProductToOrder, deleteProductFromOrder, changeCountProduct, clearOrder } = orderSlice.actions;
 export const orderReducer = orderSlice.reducer;
 

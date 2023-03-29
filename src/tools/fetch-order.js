@@ -40,7 +40,7 @@ export const fetchOrderPOST = (order) => {
 
     return   fetch(test_conectionString() + queryOrderPost(), {...headers, method: 'POST', body: orderToJSON(order)})
             .then(response => response.json())      
-            .then(json => console.log(json))
+        //    .then(json => console.log(json))
             .catch(error =>{
                 console.log(error);
             });

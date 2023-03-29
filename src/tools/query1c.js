@@ -48,6 +48,18 @@ export const queryProductsByCategoryID = (categoryID, page = 1, searchText = "")
         "&$expand=ОсновноеИзображение")
 }
 
+export const queryProductsByArrayOfID = (productsID) => {
+    return (`Catalog_Номенклатура?` +
+        `$filter= (false ` +
+        productsID.map((productID) => {
+            return ` or Ref_Key eq guid'${productID}'`
+        }).join("") +
+        `)&$format=json`+ 
+        `&$expand=ОсновноеИзображение` +
+        `&$select=` + getBaseProductFields() + `, ОсновноеИзображение`
+    )
+}
+
 export const queryProductByCodeBarcode = (codeBarcode) => {
     if (codeBarcode.length === PRODUCT_CODE_LENGTH) { 
         // пошук за кодом товара

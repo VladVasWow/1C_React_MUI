@@ -1,39 +1,51 @@
-import { Table, TableContainer, Paper, Typography, TextField,Box } from '@mui/material';
+import { Table, TableContainer, Paper, Typography, TextField, Box, Button  } from '@mui/material';
 import { OrderTableHead } from "../components/NewOrderTable/OrderTableHead";
 import { OrderTableBody } from "../components/NewOrderTable/OrderTableBody";
 import { OrderTableFooter } from "../components/NewOrderTable/OrderTableFooter";
-import { useSelector } from "react-redux";
 import { Container } from "@mui/system";
-import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
+import { useSelector, useDispatch } from "react-redux";
 import { fetchOrderPOST } from "../tools/fetch-order";
 import { orderSum } from "../tools/calculations";
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { showMessage } from '../components/Slices/snackMessageSlice';
 import { fetchProduct1CByCodeBarcode } from '../tools/fetch-product';
-import { addProductToOrder } from '../components/Slices/orderSlice';
+import { addProductToOrder, clearOrder } from '../components/Slices/orderSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const NewOrderPage = () => {
 
     const order = useSelector(state => state.order);
     const [searchText, setSearchText] = useState("");
     const dispatch = useDispatch();
+    let navigate = useNavigate();
 
     const onClickOrderSend = () => {
         fetchOrderPOST(order)
+            .then(orderJSON =>{
+                dispatch(showMessage({type : "info", textMessage: `Створено нове замовлення № ${orderJSON.Number} від ${orderJSON.Date}!`}));
+                dispatch(clearOrder());
+                navigate(`/account`)
+            } )
     }
 
     const onBlurSearch = (event) => {
-        if (!event.target.value) return
-        if (event.target.value.length < 6) {
+        const searchText = event.target.value;
+        if (!searchText) return
+        if (searchText.length < 6) {
             dispatch(showMessage({type : "warning", textMessage: `Давжина пошуку повинна бути не мешьше за 6 символів`}));
-        }
+          
+         }
         else {
-            fetchProduct1CByCodeBarcode(event.target.value).then((product) => {
-                console.log(product);
-                dispatch(addProductToOrder(product))
-                })
+            fetchProduct1CByCodeBarcode(searchText).then((product) => {
+                if (product) {
+                    console.log(product);
+                    dispatch(addProductToOrder(product))
+                    event.target.focus();
+                }
+                else
+                    dispatch(showMessage({type : "error", textMessage: `Товар з кодом/штрихкодом ${searchText} не знайдено!`}));
+            })
         }
         setSearchText("");
     }

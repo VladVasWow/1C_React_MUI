@@ -1,4 +1,4 @@
-import { queryPricesByUnits, queryProductsByCategoryID, queryProductsByCategoryIDCount, queryProductByCodeBarcode } from "./query1c";
+import { queryPricesByUnits, queryProductsByCategoryID, queryProductsByCategoryIDCount, queryProductByCodeBarcode, queryProductsByArrayOfID } from "./query1c";
 import { conectionString, getHeaders, IMAGE_SERVER, PRODUCTS_ON_PAGE } from "./settings";
 
 export const fetchProductByID = ({params}) => {
@@ -104,6 +104,16 @@ export const fetchProduct1CByID = ({params}) => {
     return   fetch(conectionString()+`Catalog_Номенклатура?$filter= Ref_Key eq guid'${params.productID}'&$format=json&$expand=ОсновноеИзображение`, getHeaders())
             .then(response => response.json()) 
             .then(json => json.value[0]) 
+            .catch(error =>{
+                console.log(error);
+            });
+}
+
+export const fetchProduct1CByArreyOfID = (productsID) => {
+   
+    return   fetch(conectionString()+queryProductsByArrayOfID(productsID), getHeaders())
+            .then(response => response.json()) 
+            .then(json => json.value) 
             .catch(error =>{
                 console.log(error);
             });

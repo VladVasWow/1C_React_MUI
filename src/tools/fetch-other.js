@@ -1,5 +1,6 @@
+import { fetchProduct1CByArreyOfID } from "./fetch-product";
 import { queryStorage } from "./query1c";
-import { conectionString, getHeaders } from "./settings";
+import { conectionString, conectionStringHS, getHeaders, IMAGE_SERVER } from "./settings";
 
 export const getProductImageURL =(storage1c) => {
     //return ( `${baseVenaCentr.protocol}://${baseVenaCentr.server}:${baseVenaCentr.port}/${baseVenaCentr.dataBase}/hs/WebSite/GetPictureByID/` + Ref_Key);
@@ -13,6 +14,16 @@ export const fetchDataFromStorage1C = (objectID) => {
     return   fetch(conectionString() + queryStorage(objectID), getHeaders())
             .then(response => response.json())      
             .then(json => json.Хранилище_Base64Data)
+            .catch(error =>{
+                console.log(error);
+            });
+}
+
+export const fetchGetTopPageItems1C = () => {
+ 
+    return   fetch(conectionStringHS("GetTopPageItems"), getHeaders())
+            .then(response => response.json())
+            .then(json => {return fetchProduct1CByArreyOfID(json["Номенклатура"])})     
             .catch(error =>{
                 console.log(error);
             });

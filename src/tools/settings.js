@@ -45,6 +45,10 @@ export const conectionString = () => {
     return `${dataBase.protocol}://${dataBase.server}:${dataBase.port}/${dataBase.dataBase}/odata/standard.odata/`;
 }
 
+export const conectionStringHS = (metod) => {
+    return `${dataBase.protocol}://${dataBase.server}:${dataBase.port}/${dataBase.dataBase}/hs/WebSite/${metod}`;
+}
+
 export const postHeaders = () => {
 
     const credentials = btoa(unescape(encodeURIComponent(testDataBase.user+":"+testDataBase.password)));
