@@ -50,7 +50,7 @@ export const ProductCard = (props) => {
                             {product.Description}
                         </Typography>
                         <Typography align="right" variant="h6" >
-                            {ccyFormat(price.Цена)} {CURRENCY_SIGN}
+                            {ccyFormat((price)?price.Цена: 0)} {CURRENCY_SIGN}
                         </Typography>
                     
                     </CardContent>

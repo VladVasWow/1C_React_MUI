@@ -15,7 +15,7 @@ import { Link } from '@mui/material';
 
 const AutoSwipeableViews = autoPlay(SwipeableViews);
 
-export const AutoPlaySwipeableViews = ({imagesData}) => {
+export const AutoPlaySwipeableViews = ({imagesData, openInNewTab}) => {
 
     const theme = useTheme();
     const [activeStep, setActiveStep] = useState(0);
@@ -36,6 +36,7 @@ export const AutoPlaySwipeableViews = ({imagesData}) => {
     return (
         <Box sx={{ maxWidth: 600, flexGrow: 1, m: "auto", mt:2 }}>
             <Link   underline="hover"
+                    target={(openInNewTab)?"_blank":""}
                     component={NavLink}
                     to={imagesData[activeStep].link}>
             <AutoSwipeableViews

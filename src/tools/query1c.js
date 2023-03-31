@@ -120,10 +120,7 @@ export const queryOrderPost = () => {
     )
 }
 
-export const queryGetOrders = ({
-    start,
-    end
-}) => {
+export const queryGetOrders = ({start, end}) => {
     return (`Document_туКоммерческоеПредложение?$filter= (Контрагент_Key eq guid'${CLIENT_ID}')` +
         ` and (Date ge datetime'${odata1cDateFormat(start)}') and (Date le '${odata1cDateFormat(end)}')` +
         `&$select=Ref_Key, Number, Date, СуммаДокумента, DeletionMark, Posted` +

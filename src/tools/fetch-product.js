@@ -1,5 +1,5 @@
 import { queryPricesByUnits, queryProductsByCategoryID, queryProductsByCategoryIDCount, queryProductByCodeBarcode, queryProductsByArrayOfID } from "./query1c";
-import { conectionString, getHeaders, IMAGE_SERVER, PRODUCTS_ON_PAGE } from "./settings";
+import { conectionString, conectionStringHS, getHeaders, IMAGE_SERVER, PRODUCTS_ON_PAGE } from "./settings";
 
 export const fetchProductByID = ({params}) => {
     console.log(params);
@@ -101,7 +101,7 @@ export const fetchProduct1CByCodeBarcode = (searchText) => {
 
 export const fetchProduct1CByID = ({params}) => {
    
-    return   fetch(conectionString()+`Catalog_Номенклатура?$filter= Ref_Key eq guid'${params.productID}'&$format=json&$expand=ОсновноеИзображение`, getHeaders())
+    return   fetch(conectionString()+queryProductsByArrayOfID([params.productID]), getHeaders())
             .then(response => response.json()) 
             .then(json => json.value[0]) 
             .catch(error =>{
@@ -109,11 +109,24 @@ export const fetchProduct1CByID = ({params}) => {
             });
 }
 
-export const fetchProduct1CByArreyOfID = (productsID) => {
+export const fetchProduct1CByArrayOfID = (productsID) => {
    
     return   fetch(conectionString()+queryProductsByArrayOfID(productsID), getHeaders())
             .then(response => response.json()) 
             .then(json => json.value) 
+            .catch(error =>{
+                console.log(error);
+            });
+}
+
+export const fetchProductImagesByCode = (code) => {
+   
+    return   fetch(conectionStringHS("GetPicturesGoods")+`/?Code=${code}`, getHeaders())
+            .then(response => response.json()) 
+            .then(json => json.КартинкиСсылки.map((element, index)=> {return {
+                    ID: index,
+					image: (element.ИдКартинка)?element.ИдКартинка : element.Ссылка,
+					link: (element.ИдКартинка)?element.ИдКартинка : element.Ссылка}})) 
             .catch(error =>{
                 console.log(error);
             });

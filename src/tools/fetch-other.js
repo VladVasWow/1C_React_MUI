@@ -1,4 +1,4 @@
-import { fetchProduct1CByArreyOfID } from "./fetch-product";
+import { fetchProduct1CByArrayOfID } from "./fetch-product";
 import { queryStorage } from "./query1c";
 import { conectionString, conectionStringHS, getHeaders, IMAGE_SERVER } from "./settings";
 
@@ -23,7 +23,7 @@ export const fetchGetTopPageItems1C = () => {
  
     return   fetch(conectionStringHS("GetTopPageItems"), getHeaders())
             .then(response => response.json())
-            .then(json => {return fetchProduct1CByArreyOfID(json["Номенклатура"])})     
+            .then(json => {return fetchProduct1CByArrayOfID(json["Номенклатура"])})     
             .catch(error =>{
                 console.log(error);
             });
